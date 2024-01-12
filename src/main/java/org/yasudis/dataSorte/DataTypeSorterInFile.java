@@ -7,24 +7,34 @@ import java.util.*;
 import java.util.regex.Pattern;
 
 public class DataTypeSorterInFile extends DataSorter {
+    private SorterParameterByDataType sorterParameterByDataType;
+    private FileWriter integerWriter;
+    private FileWriter floatWriter;
+    private FileWriter stringWriter;
+    private int intCount; // количество целых чисел
+    private int floatCount; // количество натуральных чисел
+    private int stringCount; // количество строк
+    private int intMin; // минимальное целое число
+    private int intMax; // максимальное целое число
+    private int intSum; // сумма целых чисел
+    private double floatMin; // минимальное натуральное число
+    private double floatMax; // максимальное натуральное число
+    private double floatSum; // сумма натуральных чисел
+    private int stringMin; // длина самой короткой строки
+    private int stringMax; // длина самой длинной строки
 
-    public DataTypeSorterInFile(SorterParameterByDataType sorterParameterByDataType) {
-        LinkedList<String> fileNames = new LinkedList<>();
-        List<File> files = new ArrayList<>();
-        files.add(new File("in1.txt"));
-        files.add(new File("in2.txt"));
-        // fileNames.add("in1.txt");
-        // fileNames.add("in2.txt");
-        readFile(files);
+
+    public DataTypeSorterInFile(String[] args) {
+        sorterParameterByDataType = new SorterParameterByDataType(args);
+        readFile(sorterParameterByDataType.getInputFiles());
     }
 
     public void readFile(List<File> files) {
-        // LinkedList<String> newFileNames = new LinkedList<String>(fileNames);
+
         FileWriter integerWriter;
         FileWriter floatWriter;
         FileWriter stringWriter;
         FileWriter resultWriter;
-        PriorityQueue<Pair> fileQueue = new PriorityQueue<>();
         try {
             integerWriter = new FileWriter("int.txt");
             floatWriter = new FileWriter("float.txt");

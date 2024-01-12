@@ -1,11 +1,6 @@
 
-e
-java:S1854"HRemove this useless assignment to local variable "dataTypeSorterInFile".(Â¸Ôº8ùÆşËÏ1
+d
+java:S1854"HRemove this useless assignment to local variable "dataTypeSorterInFile".(Š†œM8ùÆşËÏ1
 L	java:S106"+Replace this use of System.out by a logger.(‚ŞÏ¥ıÿÿÿÿ8úÆşËÏ1
-V
-java:S1481"9Remove this unused "dataTypeSorterInFile" local variable.(Â¸Ôº8úÆşËÏ1
-X	java:S125"<This block of commented-out lines of code should be removed.(¼â¶8ûÆşËÏ1
-Z
-java:S1128"=Remove this unused import 'org.yasudis.dataSorte.DataSorter'.( Ã³ñ8ûÆşËÏ1
-c
-java:S1128"ARemove this unused import 'org.yasudis.sortOption.SortParameter'.(Í©ìşÿÿÿÿ8ûÆşËÏ1
+U
+java:S1481"9Remove this unused "dataTypeSorterInFile" local variable.(Š†œM8úÆşËÏ1
