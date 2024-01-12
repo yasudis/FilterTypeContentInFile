@@ -1,0 +1,42 @@
+
+g	java:S112""FDefine and throw a dedicated exception instead of using a generic one.(¼ÿ¾¹ÿÿÿÿÿ8ÌıåâÏ1
+h	java:S112¡"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8ÍıåâÏ1
+v	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Öåşº8ÎıåâÏ1
+e
+java:S2095"HUse try-with-resources or close this "FileWriter" in a "finally" clause.(ª¢òá8Ø¯èâÏ1
+e
+java:S2095"HUse try-with-resources or close this "FileWriter" in a "finally" clause.(ï©üĞ8Ø¯èâÏ1
+e
+java:S2095 "HUse try-with-resources or close this "FileWriter" in a "finally" clause.(Œ»¿Ÿ8Ø¯èâÏ1
+]
+java:S1172"@Remove this unused method parameter "sorterParameterByDataType".(¢‹¿¦8ÛıåâÏ1
+K
+java:S1481".Remove this unused "fileNames" local variable.(†İİ‰8ÜıåâÏ1
+]	java:S125"<This block of commented-out lines of code should be removed.(†¹Âûÿÿÿÿ8ßıåâÏ1
+o
+java:S3776"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(Íááæ8‹êâÏ1
+_
+java:S1854"=Remove this useless assignment to local variable "fileQueue".(ªˆÄçşÿÿÿÿ8àıåâÏ1
+]
+java:S1854 "@Remove this useless assignment to local variable "resultWriter".(Œ»¿Ÿ8àıåâÏ1
+X	java:S125"<This block of commented-out lines of code should be removed.(Ñï©8àıåâÏ1
+M
+java:S1481"1Remove this unused "resultWriter" local variable.(ü¼Éu8àıåâÏ1
+P
+java:S1481".Remove this unused "fileQueue" local variable.(ªˆÄçşÿÿÿÿ8áıåâÏ1
+]	java:S125_"<This block of commented-out lines of code should be removed.(°¢”ëùÿÿÿÿ8éıåâÏ1
+
+java:S1130l"lRemove the declaration of thrown exception 'java.io.IOException', as it cannot be thrown from method's body.(íâòùşÿÿÿÿ8ëıåâÏ1
+M
+java:S1172l"+Remove this unused method parameter "line".(íâòùşÿÿÿÿ8ëıåâÏ1
+X	java:S125n"<This block of commented-out lines of code should be removed.(Ş8ëıåâÏ1
+v
+java:S1210¦"YOverride "equals(Object obj)" to comply with the contract of the "compareTo(T o)" method.(Øã"8ïıåâÏ1
+U
+java:S1144l"3Remove this unused private "writeFileFloat" method.(íâòùşÿÿÿÿ8ñıåâÏ1
+S
+java:S1144y"1Remove this unused private "writeFileInt" method.(Á¢§¼ûÿÿÿÿ8ñıåâÏ1
+W
+java:S1144ƒ"4Remove this unused private "writeFileString" method.(ŞşŸ²ÿÿÿÿÿ8ñıåâÏ1
+N
+java:S1144Œ"+Remove this unused private "result" method.(öÚ¾Àüÿÿÿÿ8òıåâÏ1
