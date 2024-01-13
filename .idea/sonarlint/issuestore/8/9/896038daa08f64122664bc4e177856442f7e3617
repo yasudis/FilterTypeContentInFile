@@ -1,67 +1,50 @@
 
-g	java:S112,"FDefine and throw a dedicated exception instead of using a generic one.(¼ÿ¾¹ÿÿÿÿÿ8ê¯öÏ1
-h	java:S112«"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8ë¯öÏ1
-v	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Öåşº8ì¯öÏ1
-e
-java:S2095("HUse try-with-resources or close this "FileWriter" in a "finally" clause.(ª¢òá8ğ±öÏ1
-e
-java:S2095*"HUse try-with-resources or close this "FileWriter" in a "finally" clause.(Œ»¿Ÿ8ğ±öÏ1
-e
-java:S2095)"HUse try-with-resources or close this "FileWriter" in a "finally" clause.(ï©üĞ8ğ±öÏ1
-o
-java:S3776 "RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(Íááæ8ó±öÏ1
-]
-java:S1854*"@Remove this useless assignment to local variable "resultWriter".(Œ»¿Ÿ8ó±öÏ1
-^
-java:S1117""ARename "integerWriter" which hides the field declared at line 11.(Éå½æ8ó±öÏ1
-a
-java:S1117#"?Rename "floatWriter" which hides the field declared at line 12.(š…³¨üÿÿÿÿ8ó±öÏ1
-]
-java:S1117$"@Rename "stringWriter" which hides the field declared at line 13.(¤ö°¤8ó±öÏ1
-M
-java:S1481%"1Remove this unused "resultWriter" local variable.(ü¼Éu8ô±öÏ1
-]	java:S125i"<This block of commented-out lines of code should be removed.(°¢”ëùÿÿÿÿ8÷±öÏ1
-
-java:S1130v"lRemove the declaration of thrown exception 'java.io.IOException', as it cannot be thrown from method's body.(íâòùşÿÿÿÿ8ø±öÏ1
-M
-java:S1172v"+Remove this unused method parameter "line".(íâòùşÿÿÿÿ8ø±öÏ1
-X	java:S125x"<This block of commented-out lines of code should be removed.(Ş8ø±öÏ1
+g	java:S112>"FDefine and throw a dedicated exception instead of using a generic one.(¼ÿ¾¹ÿÿÿÿÿ8íó–Ğ1
+h	java:S112º"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8íó–Ğ1
+v	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Öåşº8ïó–Ğ1
+J	java:S1080")Either remove or fill this block of code.(‹«‰Òüÿÿÿÿ8ıó–Ğ1
+X
+java:S26969"6Make the enclosing method "static" or remove this set.(¡—î±ùÿÿÿÿ8şó–Ğ1
+S
+java:S2696:"6Make the enclosing method "static" or remove this set.(ôœÊ8şó–Ğ1
+X
+java:S2696;"6Make the enclosing method "static" or remove this set.(­ÿ¿Úüÿÿÿÿ8şó–Ğ1
+]	java:S125x"<This block of commented-out lines of code should be removed.(°¢”ëùÿÿÿÿ8ó–Ğ1
+
+java:S1130…"lRemove the declaration of thrown exception 'java.io.IOException', as it cannot be thrown from method's body.(íâòùşÿÿÿÿ8‚ó–Ğ1
+N
+java:S1172…"+Remove this unused method parameter "line".(íâòùşÿÿÿÿ8‚ó–Ğ1
+Y	java:S125‡"<This block of commented-out lines of code should be removed.(Ş8‚ó–Ğ1
 v
-java:S1210°"YOverride "equals(Object obj)" to comply with the contract of the "compareTo(T o)" method.(Øã"8ú±öÏ1
+java:S1210¿"YOverride "equals(Object obj)" to comply with the contract of the "compareTo(T o)" method.(Øã"8„ó–Ğ1
 N
-java:S1068"1Remove this unused "integerWriter" private field.(ÄÕ«Ê8û±öÏ1
-Q
-java:S1068"/Remove this unused "floatWriter" private field.(­ïÇ­ùÿÿÿÿ8û±öÏ1
-R
-java:S1068"0Remove this unused "stringWriter" private field.(ï†Ó™ûÿÿÿÿ8û±öÏ1
-N
-java:S1068",Remove this unused "intCount" private field.(´«»ûÿÿÿÿ8û±öÏ1
+java:S1068",Remove this unused "intCount" private field.(´«»ûÿÿÿÿ8…ó–Ğ1
 K
-java:S1068".Remove this unused "floatCount" private field.(»ø÷8û±öÏ1
+java:S1068".Remove this unused "floatCount" private field.(»ø÷8…ó–Ğ1
 L
-java:S1068"/Remove this unused "stringCount" private field.(ÕÍñ8ü±öÏ1
+java:S1068"/Remove this unused "stringCount" private field.(ÕÍñ8…ó–Ğ1
 L
-java:S1068"*Remove this unused "intMin" private field.(©‹Òøÿÿÿÿ8ü±öÏ1
+java:S1068"*Remove this unused "intMin" private field.(©‹Òøÿÿÿÿ8…ó–Ğ1
 L
-java:S1068"*Remove this unused "intMax" private field.(’é°ÿÿÿÿÿ8ü±öÏ1
+java:S1068"*Remove this unused "intMax" private field.(’é°ÿÿÿÿÿ8…ó–Ğ1
 L
-java:S1068"*Remove this unused "intSum" private field.(²‘¦ˆÿÿÿÿÿ8ü±öÏ1
+java:S1068"*Remove this unused "intSum" private field.(²‘¦ˆÿÿÿÿÿ8…ó–Ğ1
 I
-java:S1068",Remove this unused "floatMin" private field.(ÉºÉÇ8ü±öÏ1
+java:S1068",Remove this unused "floatMin" private field.(ÉºÉÇ8…ó–Ğ1
 N
-java:S1068",Remove this unused "floatMax" private field.(Ü¬Œ¼úÿÿÿÿ8ü±öÏ1
+java:S1068",Remove this unused "floatMax" private field.(Ü¬Œ¼úÿÿÿÿ8…ó–Ğ1
 H
-java:S1068",Remove this unused "floatSum" private field.(™¬
-8ü±öÏ1
+java:S1068",Remove this unused "floatSum" private field.(™¬
+8…ó–Ğ1
 J
-java:S1068"-Remove this unused "stringMin" private field.(ı­Ç8ü±öÏ1
+java:S1068"-Remove this unused "stringMin" private field.(ı­Ç8…ó–Ğ1
 O
-java:S1068"-Remove this unused "stringMax" private field.(“ŸÛşÿÿÿÿ8ü±öÏ1
-U
-java:S1144v"3Remove this unused private "writeFileFloat" method.(íâòùşÿÿÿÿ8ü±öÏ1
+java:S1068"-Remove this unused "stringMax" private field.(“ŸÛşÿÿÿÿ8…ó–Ğ1
+V
+java:S1144…"3Remove this unused private "writeFileFloat" method.(íâòùşÿÿÿÿ8…ó–Ğ1
 T
-java:S1144ƒ"1Remove this unused private "writeFileInt" method.(Á¢§¼ûÿÿÿÿ8ü±öÏ1
+java:S1144’"1Remove this unused private "writeFileInt" method.(Á¢§¼ûÿÿÿÿ8…ó–Ğ1
 W
-java:S1144"4Remove this unused private "writeFileString" method.(ŞşŸ²ÿÿÿÿÿ8ü±öÏ1
+java:S1144œ"4Remove this unused private "writeFileString" method.(ŞşŸ²ÿÿÿÿÿ8…ó–Ğ1
 N
-java:S1144–"+Remove this unused private "result" method.(öÚ¾Àüÿÿÿÿ8ü±öÏ1
+java:S1144¥"+Remove this unused private "result" method.(öÚ¾Àüÿÿÿÿ8…ó–Ğ1

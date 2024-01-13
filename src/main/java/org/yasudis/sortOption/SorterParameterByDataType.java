@@ -9,6 +9,9 @@ public class SorterParameterByDataType extends SortParameter {
     private static final String DEFAULT_FLOATS_FILE = "floats.txt";
     private static final String DEFAULT_STRINGS_FILE = "strings.txt";
     private String outputPath;
+    private String outputFileInteger;
+    private String outputFileFloat;
+    private String outputFileString;
     private String prefix;
     private boolean append;
     private boolean shortStats;
@@ -17,11 +20,14 @@ public class SorterParameterByDataType extends SortParameter {
 
     public SorterParameterByDataType(String[] args) {
         // Значения по умолчанию
-        outputPath = "."; // текущая папка
+        outputPath = ""; // текущая папка
         prefix = ""; // пустой префикс
         append = false; // режим перезаписи
         shortStats = false; // без краткой статистики
         fullStats = false; // без полной статистики
+        outputFileInteger = DEFAULT_INTEGERS_FILE;
+        outputFileFloat = DEFAULT_FLOATS_FILE;
+        outputFileString = DEFAULT_STRINGS_FILE;
 
         // Индекс для перебора аргументов
         int i = 0;
@@ -38,6 +44,7 @@ public class SorterParameterByDataType extends SortParameter {
                     if (i + 1 < args.length && !args[i + 1].startsWith("-")) {
                         // Присваиваем полю outputPath значение следующего аргумента
                         outputPath = args[i + 1];
+                        addOutputPath(outputPath);
                         // Увеличиваем индекс на 2
                         i += 2;
                     } else {
@@ -51,6 +58,7 @@ public class SorterParameterByDataType extends SortParameter {
                     if (i + 1 < args.length && !args[i + 1].startsWith("-")) {
                         // Присваиваем полю prefix значение следующего аргумента
                         prefix = args[i + 1];
+                        addOutputFileName(prefix);
                         // Увеличиваем индекс на 2
                         i += 2;
                     } else {
@@ -94,6 +102,30 @@ public class SorterParameterByDataType extends SortParameter {
                 i++;
             }
         }
+    }
+
+    private void addOutputPath(String string) {
+        outputFileInteger += string + "/";
+        outputFileFloat += string + "/";
+        outputFileString += string + "/";
+    }
+
+    private void addOutputFileName(String string) {
+        outputFileInteger += string + DEFAULT_INTEGERS_FILE;
+        outputFileFloat += string + DEFAULT_FLOATS_FILE;
+        outputFileString += string + DEFAULT_STRINGS_FILE;
+    }
+
+    public String getOutputFileInteger() {
+        return outputFileInteger;
+    }
+
+    public String getOutputFileFloat() {
+        return outputFileFloat;
+    }
+
+    public String getOutputFileString() {
+        return outputFileString;
     }
 
     // Геттеры для полей

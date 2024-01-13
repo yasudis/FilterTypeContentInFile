@@ -8,9 +8,11 @@ import java.util.regex.Pattern;
 
 public class DataTypeSorterInFile extends DataSorter {
     private SorterParameterByDataType sorterParameterByDataType;
-    private FileWriter integerWriter;
-    private FileWriter floatWriter;
-    private FileWriter stringWriter;
+    private List<BufferedReader> readers = new ArrayList<>();
+    private static FileWriter integerWriter;
+    private static FileWriter floatWriter;
+    private static FileWriter stringWriter;
+
     private int intCount; // количество целых чисел
     private int floatCount; // количество натуральных чисел
     private int stringCount; // количество строк
@@ -26,52 +28,73 @@ public class DataTypeSorterInFile extends DataSorter {
 
     public DataTypeSorterInFile(String[] args) {
         sorterParameterByDataType = new SorterParameterByDataType(args);
-        readFile(sorterParameterByDataType.getInputFiles());
+
+        intCount = 0;
+        floatCount = 0;
+        stringCount = 0;
+        intMin = 0;
+        intMax = 0;
+        intSum = 0;
+        floatMin = 0;
+        floatMax = 0;
+        floatSum = 0;
+        stringMin = 0;
+        stringMax = 0;
     }
 
-    public void readFile(List<File> files) {
+    public void run() {
+        openWriteStreams();
+        openReaderStreams();
+        while (!readOneLineFiles()) {
 
-        FileWriter integerWriter;
-        FileWriter floatWriter;
-        FileWriter stringWriter;
-        FileWriter resultWriter;
+        }
+        closeReaderStreams();
+        closeWriterStreams();
+    }
+
+    private void openWriteStreams() {
         try {
-            integerWriter = new FileWriter("int.txt");
-            floatWriter = new FileWriter("float.txt");
-            stringWriter = new FileWriter("strings.txt");
-            resultWriter = new FileWriter("result.txt");
+            integerWriter = new FileWriter(sorterParameterByDataType.getOutputFileInteger());
+            floatWriter = new FileWriter(sorterParameterByDataType.getOutputFileFloat());
+            stringWriter = new FileWriter(sorterParameterByDataType.getOutputFileString());
+
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
+    }
 
-        List<BufferedReader> readers = new ArrayList<>();
-        for (File file : files) {
+    private boolean readOneLineFiles() {
+        boolean isLine = true;
+
+        for (int i = 0; i < readers.size(); i++) {
+            try {
+                // Читаем строку из i-го файла
+                String line = readers.get(i).readLine();
+                if (line != null) {
+                    // обрабатываем методом строку
+                    sortTypeData(line);
+                    // Устанавливаем флаг, что еще не достигли конца всех файлов
+                    isLine = false;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return isLine;
+    }
+
+    private void openReaderStreams() {
+        for (File file : sorterParameterByDataType.getInputFiles()) {
             try {
                 readers.add(new BufferedReader(new FileReader(file)));
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+    }
 
-
-        boolean done = false;
-        while (!done) {
-            done = true;
-            for (int i = 0; i < readers.size(); i++) {
-                try {
-                    // Читаем строку из i-го файла
-                    String line = readers.get(i).readLine();
-                    if (line != null) {
-                        // Выводим строку на экран
-                        sortTypeData(line, integerWriter, floatWriter, stringWriter);
-                        // Устанавливаем флаг, что еще не достигли конца всех файлов
-                        done = false;
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+    private void closeReaderStreams() {
         for (BufferedReader reader : readers) {
             try {
                 reader.close();
@@ -79,32 +102,24 @@ public class DataTypeSorterInFile extends DataSorter {
                 e.printStackTrace();
             }
         }
+    }
 
+    private void closeWriterStreams() {
         try {
-            integerWriter.
-
-                    close();
-            floatWriter.
-
-                    close();
-            stringWriter.
-
-                    close();
-        } catch (
-                IOException e) {
-            e.
-
-                    printStackTrace();
+            integerWriter.close();
+            floatWriter.close();
+            stringWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
-    public static void sortTypeData(String line, FileWriter intWriter, FileWriter floatWriter, FileWriter
-            stringWriter) {
+    public static void sortTypeData(String line) {
         try {
 
             //result(line);
             if (Pattern.matches("^-?\\d+$", line)) {
-                intWriter.write(line + "\n");
+                integerWriter.write(line + "\n");
             } else if (Pattern.matches("^-?\\d+(\\.\\d+)?$", line)) {
                 floatWriter.write(line + "\n"); //вещественное число
             } else {
