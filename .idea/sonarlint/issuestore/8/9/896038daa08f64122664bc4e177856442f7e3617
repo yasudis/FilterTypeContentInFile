@@ -1,50 +1,43 @@
 
-g	java:S112>"FDefine and throw a dedicated exception instead of using a generic one.(¼ÿ¾¹ÿÿÿÿÿ8íó–Ğ1
-h	java:S112º"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8íó–Ğ1
-v	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Öåşº8ïó–Ğ1
-J	java:S1080")Either remove or fill this block of code.(‹«‰Òüÿÿÿÿ8ıó–Ğ1
-X
-java:S26969"6Make the enclosing method "static" or remove this set.(¡—î±ùÿÿÿÿ8şó–Ğ1
-S
-java:S2696:"6Make the enclosing method "static" or remove this set.(ôœÊ8şó–Ğ1
-X
-java:S2696;"6Make the enclosing method "static" or remove this set.(­ÿ¿Úüÿÿÿÿ8şó–Ğ1
-]	java:S125x"<This block of commented-out lines of code should be removed.(°¢”ëùÿÿÿÿ8ó–Ğ1
-
-java:S1130…"lRemove the declaration of thrown exception 'java.io.IOException', as it cannot be thrown from method's body.(íâòùşÿÿÿÿ8‚ó–Ğ1
-N
-java:S1172…"+Remove this unused method parameter "line".(íâòùşÿÿÿÿ8‚ó–Ğ1
-Y	java:S125‡"<This block of commented-out lines of code should be removed.(Ş8‚ó–Ğ1
-v
-java:S1210¿"YOverride "equals(Object obj)" to comply with the contract of the "compareTo(T o)" method.(Øã"8„ó–Ğ1
-N
-java:S1068",Remove this unused "intCount" private field.(´«»ûÿÿÿÿ8…ó–Ğ1
-K
-java:S1068".Remove this unused "floatCount" private field.(»ø÷8…ó–Ğ1
-L
-java:S1068"/Remove this unused "stringCount" private field.(ÕÍñ8…ó–Ğ1
-L
-java:S1068"*Remove this unused "intMin" private field.(©‹Òøÿÿÿÿ8…ó–Ğ1
-L
-java:S1068"*Remove this unused "intMax" private field.(’é°ÿÿÿÿÿ8…ó–Ğ1
-L
-java:S1068"*Remove this unused "intSum" private field.(²‘¦ˆÿÿÿÿÿ8…ó–Ğ1
+g	java:S112H"FDefine and throw a dedicated exception instead of using a generic one.(¼ÿ¾¹ÿÿÿÿÿ8ÿ©½Ğ1
+v	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Öåşº8€‚©½Ğ1
+Ÿ
+java:S1186±"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Ë„œ¨8‘‚©½Ğ1
+E	java:S1085")Either remove or fill this block of code.(âÍÂó8“‚©½Ğ1
+G	java:S106N"+Replace this use of System.out by a logger.(» ¬Ï8•‚©½Ğ1
+L	java:S106O"+Replace this use of System.out by a logger.(æÇÏÊùÿÿÿÿ8‹¬½Ğ1
+L	java:S106P"+Replace this use of System.out by a logger.(Ø—şµúÿÿÿÿ8ÜÒ°½Ğ1
+G	java:S106Q"+Replace this use of System.out by a logger.(¤»¼8Ëß²½Ğ1
+L	java:S106R"+Replace this use of System.out by a logger.(ÚôÖıÿÿÿÿ8î…¶½Ğ1
 I
-java:S1068",Remove this unused "floatMin" private field.(ÉºÉÇ8…ó–Ğ1
+java:S1172±"+Remove this unused method parameter "line".(Ë„œ¨8™‚©½Ğ1
+
+java:S1130½"lRemove the declaration of thrown exception 'java.io.IOException', as it cannot be thrown from method's body.(íâòùşÿÿÿÿ8š‚©½Ğ1
 N
-java:S1068",Remove this unused "floatMax" private field.(Ü¬Œ¼úÿÿÿÿ8…ó–Ğ1
+java:S1172½"+Remove this unused method parameter "line".(íâòùşÿÿÿÿ8š‚©½Ğ1
+Y	java:S125¿"<This block of commented-out lines of code should be removed.(Ş8š‚©½Ğ1
+P
+java:S1068".Remove this unused "floatCount" private field.(‡Öâûÿÿÿÿ8œ‚©½Ğ1
+L
+java:S1068"/Remove this unused "stringCount" private field.(Ûœ²Ö8œ‚©½Ğ1
+I
+java:S1068",Remove this unused "floatMin" private field.(ÉºÉÇ8œ‚©½Ğ1
+N
+java:S1068",Remove this unused "floatMax" private field.(Ü¬Œ¼úÿÿÿÿ8œ‚©½Ğ1
 H
-java:S1068",Remove this unused "floatSum" private field.(™¬
-8…ó–Ğ1
+java:S1068",Remove this unused "floatSum" private field.(™¬
+8œ‚©½Ğ1
 J
-java:S1068"-Remove this unused "stringMin" private field.(ı­Ç8…ó–Ğ1
+java:S1068 "-Remove this unused "stringMin" private field.(ı­Ç8œ‚©½Ğ1
 O
-java:S1068"-Remove this unused "stringMax" private field.(“ŸÛşÿÿÿÿ8…ó–Ğ1
+java:S1068!"-Remove this unused "stringMax" private field.(“ŸÛşÿÿÿÿ8œ‚©½Ğ1
+_
+java:S1144±"ARemove this unused private "calculateFullStatisticsFloat" method.(Ë„œ¨8‚©½Ğ1
 V
-java:S1144…"3Remove this unused private "writeFileFloat" method.(íâòùşÿÿÿÿ8…ó–Ğ1
-T
-java:S1144’"1Remove this unused private "writeFileInt" method.(Á¢§¼ûÿÿÿÿ8…ó–Ğ1
-W
-java:S1144œ"4Remove this unused private "writeFileString" method.(ŞşŸ²ÿÿÿÿÿ8…ó–Ğ1
+java:S1144½"3Remove this unused private "writeFileFloat" method.(íâòùşÿÿÿÿ8‚©½Ğ1
+O
+java:S1144Ê"1Remove this unused private "writeFileInt" method.(øœ£÷8‚©½Ğ1
+R
+java:S1144Ô"4Remove this unused private "writeFileString" method.(õ„ÅÎ8‚©½Ğ1
 N
-java:S1144¥"+Remove this unused private "result" method.(öÚ¾Àüÿÿÿÿ8…ó–Ğ1
+java:S1144İ"+Remove this unused private "result" method.(öÚ¾Àüÿÿÿÿ8‚©½Ğ1

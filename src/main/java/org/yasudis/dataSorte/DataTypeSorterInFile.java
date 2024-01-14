@@ -3,22 +3,29 @@ package org.yasudis.dataSorte;
 import org.yasudis.sortOption.SorterParameterByDataType;
 
 import java.io.*;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.*;
 import java.util.regex.Pattern;
 
 public class DataTypeSorterInFile extends DataSorter {
     private SorterParameterByDataType sorterParameterByDataType;
     private List<BufferedReader> readers = new ArrayList<>();
-    private static FileWriter integerWriter;
-    private static FileWriter floatWriter;
-    private static FileWriter stringWriter;
+    // Сделать список записи врайтеров.
+    private FileWriter integerWriter;
+    private FileWriter floatWriter;
+    private FileWriter stringWriter;
 
-    private int intCount; // количество целых чисел
-    private int floatCount; // количество натуральных чисел
-    private int stringCount; // количество строк
-    private int intMin; // минимальное целое число
-    private int intMax; // максимальное целое число
-    private int intSum; // сумма целых чисел
+    private BigInteger intCount = BigInteger.ZERO;
+    // количество целых чисел
+    private BigInteger floatCount = BigInteger.ZERO;
+    // количество натуральных чисел
+    private BigInteger stringCount = BigInteger.ZERO;
+    // количество строк
+    private BigInteger intMin; // минимальное целое число
+    private BigInteger intMax; // максимальное целое число
+    private BigInteger intSum = BigInteger.ZERO;// сумма целых чисел
+    private BigDecimal intAverage;
     private double floatMin; // минимальное натуральное число
     private double floatMax; // максимальное натуральное число
     private double floatSum; // сумма натуральных чисел
@@ -29,12 +36,10 @@ public class DataTypeSorterInFile extends DataSorter {
     public DataTypeSorterInFile(String[] args) {
         sorterParameterByDataType = new SorterParameterByDataType(args);
 
-        intCount = 0;
-        floatCount = 0;
-        stringCount = 0;
-        intMin = 0;
-        intMax = 0;
-        intSum = 0;
+        intCount = BigInteger.ZERO;
+        floatCount = BigInteger.ZERO;
+        stringCount = BigInteger.ZERO;
+        intSum = BigInteger.ZERO;
         floatMin = 0;
         floatMax = 0;
         floatSum = 0;
@@ -45,9 +50,14 @@ public class DataTypeSorterInFile extends DataSorter {
     public void run() {
         openWriteStreams();
         openReaderStreams();
-        while (!readOneLineFiles()) {
+        while (!sortOneLineInFiles()) {
 
         }
+
+        if (sorterParameterByDataType.isFullStats()) {
+            showFullStats();
+        }
+
         closeReaderStreams();
         closeWriterStreams();
     }
@@ -63,7 +73,17 @@ public class DataTypeSorterInFile extends DataSorter {
         }
     }
 
-    private boolean readOneLineFiles() {
+    private void showFullStats() {
+        if (intSum != null) {
+            System.out.println("Количество типов Integer равно: " + intCount + ".");
+            System.out.println("Максимальное число типа Integer равно: " + intMax + ".");
+            System.out.println("Минимальное число типа Integer равно: " + intMin + ".");
+            System.out.println("Сумма чисел типа Integer равно: " + intSum + ".");
+            System.out.println("Среднее Арифметическое значение чисел типа Integer равно: " + intAverage + ".");
+        }
+    }
+
+    private boolean sortOneLineInFiles() {
         boolean isLine = true;
 
         for (int i = 0; i < readers.size(); i++) {
@@ -114,12 +134,11 @@ public class DataTypeSorterInFile extends DataSorter {
         }
     }
 
-    public static void sortTypeData(String line) {
+    public void sortTypeData(String line) {
         try {
-
-            //result(line);
             if (Pattern.matches("^-?\\d+$", line)) {
                 integerWriter.write(line + "\n");
+                calculateFullStatisticsInteger(line);
             } else if (Pattern.matches("^-?\\d+(\\.\\d+)?$", line)) {
                 floatWriter.write(line + "\n"); //вещественное число
             } else {
@@ -128,6 +147,43 @@ public class DataTypeSorterInFile extends DataSorter {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void calculateFullStatisticsInteger(String line) {
+        BigInteger number = new BigInteger(line);
+        BigInteger increment = BigInteger.ONE;
+        intCount = intCount.add(increment);
+
+        if (intMin == null) {
+            intMin = number;
+        } else {
+            if (intMin.compareTo(number) > 0) {
+                intMin = number;
+            }
+        }
+
+        if (intMax == null) {
+            intMax = number;
+        } else {
+            if (intMax.compareTo(number) < 0) {
+                intMax = number;
+            }
+        }
+
+        sumInt(number);
+        calculateAverage();
+    }
+
+    private void calculateFullStatisticsFloat(String line) {
+
+    }
+
+    private void sumInt(BigInteger number) {
+        intSum = intSum.add(number);
+    }
+
+    private void calculateAverage() {
+        intAverage = new BigDecimal(intSum.divide(intCount));
     }
 
     private static void writeFileFloat(String line) throws IOException {
@@ -143,7 +199,7 @@ public class DataTypeSorterInFile extends DataSorter {
 
     }
 
-    private static void writeFileInt(String line) throws IOException {
+    private void writeFileInt(String line) throws IOException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("int.txt"))) {
             writer.write(line);
             writer.newLine();
@@ -153,7 +209,7 @@ public class DataTypeSorterInFile extends DataSorter {
 
     }
 
-    private static void writeFileString(String line) throws IOException {
+    private void writeFileString(String line) throws IOException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("String.txt"))) {
             writer.write(line);
             writer.newLine();
@@ -171,26 +227,4 @@ public class DataTypeSorterInFile extends DataSorter {
             e.printStackTrace();
         }
     }
-
-    class Pair implements Comparable<Pair> {
-        String fileName;
-        String currentLine;
-        BufferedReader bufferedReader;
-
-        public Pair(String fileName, BufferedReader bufferedReader) {
-            this.fileName = fileName;
-            this.bufferedReader = bufferedReader;
-            try {
-                this.currentLine = bufferedReader.readLine();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        @Override
-        public int compareTo(Pair other) {
-            return this.currentLine.compareTo(other.currentLine);
-        }
-    }
-
 }
