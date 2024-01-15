@@ -1,4 +1,4 @@
-package org.yasudis.sortOption;
+package org.yasudis.model.sortOption;
 
 import java.io.File;
 import java.util.ArrayList;

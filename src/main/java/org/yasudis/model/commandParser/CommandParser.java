@@ -1,7 +1,7 @@
-package org.yasudis.commandParser;
+package org.yasudis.model.commandParser;
 
 import org.apache.commons.cli.*;
-import org.yasudis.sortOption.SorterParameterByDataType;
+import org.yasudis.model.sortOption.SorterParameterByDataType;
 
 
 public class CommandParser {

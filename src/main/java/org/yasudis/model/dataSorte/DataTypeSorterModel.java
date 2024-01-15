@@ -1,6 +1,6 @@
-package org.yasudis.dataSorte;
+package org.yasudis.model.dataSorte;
 
-import org.yasudis.sortOption.SorterParameterByDataType;
+import org.yasudis.model.sortOption.SorterParameterByDataType;
 
 import java.io.*;
 import java.math.BigDecimal;
@@ -8,7 +8,7 @@ import java.math.BigInteger;
 import java.util.*;
 import java.util.regex.Pattern;
 
-public class DataTypeSorterInFile extends DataSorter {
+public class DataTypeSorterModel extends DataSorter {
     private SorterParameterByDataType sorterParameterByDataType;
     private List<BufferedReader> readers = new ArrayList<>();
     // Сделать список записи врайтеров.
@@ -33,9 +33,7 @@ public class DataTypeSorterInFile extends DataSorter {
     private int stringMax; // длина самой длинной строки
 
 
-    public DataTypeSorterInFile(String[] args) {
-        sorterParameterByDataType = new SorterParameterByDataType(args);
-
+    public DataTypeSorterModel() {
         intCount = BigInteger.ZERO;
         floatCount = BigInteger.ZERO;
         stringCount = BigInteger.ZERO;
@@ -60,6 +58,10 @@ public class DataTypeSorterInFile extends DataSorter {
 
         closeReaderStreams();
         closeWriterStreams();
+    }
+
+    public void setSorterParameterByDataType(String[] args) {
+        sorterParameterByDataType = new SorterParameterByDataType(args);
     }
 
     private void openWriteStreams() {

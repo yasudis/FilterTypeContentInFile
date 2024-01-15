@@ -1,15 +1,16 @@
 package org.yasudis;
 
-import org.yasudis.commandParser.CommandParser;
-import org.yasudis.dataSorte.DataSorter;
-import org.yasudis.dataSorte.DataTypeSorterInFile;
-import org.yasudis.sortOption.SortParameter;
-import org.yasudis.sortOption.SorterParameterByDataType;
+import org.yasudis.Controller.DataTypeSorterController;
+import org.yasudis.model.dataSorte.DataTypeSorterModel;
+import org.yasudis.view.DataTypeSorterView;
 
 public class Main {
     public static void main(String[] args) {
         System.out.println("Hello world!");
-        DataTypeSorterInFile dataTypeSorterInFile = new DataTypeSorterInFile(args);
-        dataTypeSorterInFile.run();
+        DataTypeSorterModel dataTypeSorterModel = new DataTypeSorterModel();
+        DataTypeSorterView dataTypeSorterView = new DataTypeSorterView();
+        DataTypeSorterController dataTypeSorterController = new DataTypeSorterController(dataTypeSorterModel , dataTypeSorterView);
+        dataTypeSorterController.setup(args);
+        dataTypeSorterController.run();
     }
 }
