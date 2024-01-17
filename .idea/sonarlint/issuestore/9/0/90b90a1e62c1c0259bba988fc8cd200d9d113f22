@@ -1,5 +1,0 @@
-
-
-java:S1488""qImmediately return this expression instead of assigning it to the temporary variable "sorterParameterByDataType".(–ñ‡8¿ÅˆóÏ1
-v	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(¹½Ã§8ÀÅˆóÏ1
-G	java:S106"+Replace this use of System.err by a logger.(Ü®’¬8‚™’óÏ1

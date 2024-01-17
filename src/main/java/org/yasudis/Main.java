@@ -6,11 +6,12 @@ import org.yasudis.view.DataTypeSorterView;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
         DataTypeSorterModel dataTypeSorterModel = new DataTypeSorterModel();
         DataTypeSorterView dataTypeSorterView = new DataTypeSorterView();
-        DataTypeSorterController dataTypeSorterController = new DataTypeSorterController(dataTypeSorterModel , dataTypeSorterView);
+        DataTypeSorterController dataTypeSorterController = new DataTypeSorterController(dataTypeSorterModel, dataTypeSorterView);
+
         dataTypeSorterController.setup(args);
         dataTypeSorterController.run();
+        dataTypeSorterController.showStatics();
     }
 }

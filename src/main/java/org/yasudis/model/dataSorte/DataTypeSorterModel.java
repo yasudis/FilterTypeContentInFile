@@ -11,38 +11,29 @@ import java.util.regex.Pattern;
 public class DataTypeSorterModel extends DataSorter {
     private SorterParameterByDataType sorterParameterByDataType;
     private List<BufferedReader> readers = new ArrayList<>();
-    // Сделать список записи врайтеров.
     private FileWriter integerWriter;
     private FileWriter floatWriter;
     private FileWriter stringWriter;
 
     private BigInteger intCount = BigInteger.ZERO;
-    // количество целых чисел
     private BigInteger floatCount = BigInteger.ZERO;
-    // количество натуральных чисел
     private BigInteger stringCount = BigInteger.ZERO;
     // количество строк
-    private BigInteger intMin; // минимальное целое число
-    private BigInteger intMax; // максимальное целое число
-    private BigInteger intSum = BigInteger.ZERO;// сумма целых чисел
-    private BigDecimal intAverage;
-    private double floatMin; // минимальное натуральное число
-    private double floatMax; // максимальное натуральное число
-    private double floatSum; // сумма натуральных чисел
-    private int stringMin; // длина самой короткой строки
-    private int stringMax; // длина самой длинной строки
+    private BigInteger intMin;
+    private BigInteger intMax;
+    private BigInteger intSum = BigInteger.ZERO;
+    private BigDecimal intAverage = BigDecimal.ZERO;
+    private BigDecimal floatAverage = BigDecimal.ZERO;
+
+    private BigDecimal floatMin;
+    private BigDecimal floatMax;
+    private BigDecimal floatSum = BigDecimal.ZERO;
+    private BigInteger stringCountMin;
+    private BigInteger stringCountMax;
 
 
     public DataTypeSorterModel() {
-        intCount = BigInteger.ZERO;
-        floatCount = BigInteger.ZERO;
-        stringCount = BigInteger.ZERO;
-        intSum = BigInteger.ZERO;
-        floatMin = 0;
-        floatMax = 0;
-        floatSum = 0;
-        stringMin = 0;
-        stringMax = 0;
+
     }
 
     public void run() {
@@ -50,10 +41,6 @@ public class DataTypeSorterModel extends DataSorter {
         openReaderStreams();
         while (!sortOneLineInFiles()) {
 
-        }
-
-        if (sorterParameterByDataType.isFullStats()) {
-            showFullStats();
         }
 
         closeReaderStreams();
@@ -64,25 +51,62 @@ public class DataTypeSorterModel extends DataSorter {
         sorterParameterByDataType = new SorterParameterByDataType(args);
     }
 
-    private void openWriteStreams() {
-        try {
-            integerWriter = new FileWriter(sorterParameterByDataType.getOutputFileInteger());
-            floatWriter = new FileWriter(sorterParameterByDataType.getOutputFileFloat());
-            stringWriter = new FileWriter(sorterParameterByDataType.getOutputFileString());
-
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
+    public String getStatics() {
+        if (sorterParameterByDataType.isFullStatics()) {
+            return getFullStatics();
         }
+
+        if (sorterParameterByDataType.isShortStatics()) {
+            return getShortStatics();
+        }
+
+        return "Параметры выводы статистики не были заданы.";
     }
 
-    private void showFullStats() {
-        if (intSum != null) {
-            System.out.println("Количество типов Integer равно: " + intCount + ".");
-            System.out.println("Максимальное число типа Integer равно: " + intMax + ".");
-            System.out.println("Минимальное число типа Integer равно: " + intMin + ".");
-            System.out.println("Сумма чисел типа Integer равно: " + intSum + ".");
-            System.out.println("Среднее Арифметическое значение чисел типа Integer равно: " + intAverage + ".");
+    private String getFullStatics() {
+        String fullStatic = "";
+
+        if (intMax != null) {
+            fullStatic = "Максимальное число типа Integer равно: " + intMax + ".\n";
+            fullStatic += ("Минимальное число типа Integer равно: " + intMin + ".\n");
+            fullStatic += ("Сумма чисел типа Integer равно: " + intSum + ".\n");
+            fullStatic += ("Среднее Арифметическое значение чисел типа Integer равно: " + intAverage + ".\n");
         }
+
+        if (floatMax != null) {
+            fullStatic += ("Количество типов Float равно: " + floatCount + ".\n");
+            fullStatic += ("Максимальное число типа Float равно: " + floatMax + ".\n");
+            fullStatic += ("Минимальное число типа Float равно: " + floatMin + ".\n");
+            fullStatic += ("Сумма чисел типа Float равно: " + floatSum + ".");
+            fullStatic += ("Среднее Арифметическое значение чисел типа Float равно: " + floatAverage + ".\n");
+        }
+
+        if (stringCount != null) {
+            fullStatic += ("Количество типов String равно: " + stringCount + ".\n");
+            fullStatic += ("Максимальное количество символов в String равно: " + stringCountMax + ".\n");
+            fullStatic += ("Минимальное количество символов в String равно: " + stringCountMin + ".\n");
+        }
+
+        return fullStatic;
+    }
+
+    private String getShortStatics() {
+        String shortStats = "";
+        if (intMax != null) {
+            shortStats = "Количество типов Integer равно: " + intCount + ".\n";
+
+        }
+
+        if (floatMax != null) {
+            shortStats += "Количество типов Float равно: " + floatCount + ".\n";
+
+        }
+
+        if (stringCount != null) {
+            shortStats += "Количество типов String равно: " + stringCount + ".\n";
+        }
+
+        return shortStats;
     }
 
     private boolean sortOneLineInFiles() {
@@ -126,15 +150,7 @@ public class DataTypeSorterModel extends DataSorter {
         }
     }
 
-    private void closeWriterStreams() {
-        try {
-            integerWriter.close();
-            floatWriter.close();
-            stringWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+
 
     public void sortTypeData(String line) {
         try {
@@ -143,8 +159,10 @@ public class DataTypeSorterModel extends DataSorter {
                 calculateFullStatisticsInteger(line);
             } else if (Pattern.matches("^-?\\d+(\\.\\d+)?$", line)) {
                 floatWriter.write(line + "\n"); //вещественное число
+                calculateFullStatisticsFloat(line);
             } else {
                 stringWriter.write(line + "\n");//строка
+                calculateFullStatisticsString(line);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -173,58 +191,86 @@ public class DataTypeSorterModel extends DataSorter {
         }
 
         sumInt(number);
-        calculateAverage();
+        calculateAverageInt();
     }
 
     private void calculateFullStatisticsFloat(String line) {
+        BigDecimal number = new BigDecimal(line);
+        BigInteger increment = BigInteger.ONE;
+        floatCount = floatCount.add(increment);
 
+        if (floatMin == null) {
+            floatMin = number;
+        } else {
+            if (floatMin.compareTo(number) > 0) {
+                floatMin = number;
+            }
+        }
+
+        if (floatMax == null) {
+            floatMax = number;
+        } else {
+            if (floatMax.compareTo(number) < 0) {
+                floatMax = number;
+            }
+        }
+
+        sumFloat(number);
+        calculateAverageFloat();
+    }
+
+    private void calculateFullStatisticsString(String line) {
+        BigInteger count = new BigInteger(String.valueOf(line.length()));
+        stringCount = stringCount.add(BigInteger.ONE);
+
+        if (stringCountMin == null) {
+            stringCountMin = count;
+        } else {
+            if (stringCountMin.compareTo(count) > 0) {
+                stringCountMin = count;
+            }
+        }
+
+        if (stringCountMax == null) {
+            stringCountMax = count;
+        } else {
+            if (stringCountMax.compareTo(count) < 0) {
+                stringCountMax = count;
+            }
+        }
     }
 
     private void sumInt(BigInteger number) {
         intSum = intSum.add(number);
     }
 
-    private void calculateAverage() {
+    private void sumFloat(BigDecimal number) {
+        floatSum = floatSum.add(number);
+    }
+
+    private void calculateAverageInt() {
         intAverage = new BigDecimal(intSum.divide(intCount));
     }
 
-    private static void writeFileFloat(String line) throws IOException {
-       /*
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("float.txt"))) {
-            writer.write(line);
-            writer.newLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        */
-
+    private void calculateAverageFloat() {
+        floatAverage = floatSum.divide(new BigDecimal(floatCount));
     }
 
-    private void writeFileInt(String line) throws IOException {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("int.txt"))) {
-            writer.write(line);
-            writer.newLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void openWriteStreams() {
+        try {
+            integerWriter = new FileWriter(sorterParameterByDataType.getOutputFileInteger());
+            floatWriter = new FileWriter(sorterParameterByDataType.getOutputFileFloat());
+            stringWriter = new FileWriter(sorterParameterByDataType.getOutputFileString());
 
-    }
-
-    private void writeFileString(String line) throws IOException {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("String.txt"))) {
-            writer.write(line);
-            writer.newLine();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
         }
     }
-
-    private static void result(String line) throws IOException {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("result.txt"))) {
-            writer.write(line);
-            writer.newLine();
-
+    private void closeWriterStreams() {
+        try {
+            integerWriter.close();
+            floatWriter.close();
+            stringWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -19,4 +19,8 @@ public class DataTypeSorterController {
     public void setup(String[] args) {
         dataTypeSorterModel.setSorterParameterByDataType(args);
     }
+
+    public void showStatics() {
+        dataTypeSorterView.printStatistics(dataTypeSorterModel.getStatics());
+    }
 }

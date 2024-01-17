@@ -141,11 +141,11 @@ public class SorterParameterByDataType extends SortParameter {
         return append;
     }
 
-    public boolean isShortStats() {
+    public boolean isShortStatics() {
         return shortStats;
     }
 
-    public boolean isFullStats() {
+    public boolean isFullStatics() {
         return fullStats;
     }
 
