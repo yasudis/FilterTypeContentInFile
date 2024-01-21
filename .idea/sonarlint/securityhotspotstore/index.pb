@@ -33,10 +33,6 @@ f
 i
 9src/main/java/org/yasudis/model/dataSorte/DataSorter.java,f\1\f1bca3e39407ad35e7ea1f40fccaa91d83a8724f
 7
-in3.txt,6\4\64ef302a8b4add63b9f7beb6ad6458bef5346406
-7
-in4.txt,9\b\9bc836ef512fa71c4f3a000bc32d07ec1a2b7535
-7
 in6.txt,1\1\115bd7b4d404e92ef44daff406900ec419d8d0ce
 v
 Fsrc/test/java/org/yasudis/Controller/DataTypeSorterControllerTest.java,a\b\abfe536c766ad5c151339053909c79e20117c666
@@ -45,8 +41,6 @@ Fsrc/test/java/org/yasudis/Controller/DataTypeSorterControllerTest.java,a\b\abf
 floats.txt,2\4\24d2148449b47727f6f058ded26b1389e19e284e
 <
 integers.txt,1\6\16cf46fc344b09297cc4a88961cf33ef9ca46cba
-_
-/src/main/java/org/yasudis/model/dataType/D.java,7\4\74021b330b0a4e55cad3ea24cbca3b60ca12b94c
 f
 6src/main/java/org/yasudis/model/dataType/DataType.java,4\e\4e2fd9c49b389fc97f7c4e58566be33c9ed2afb0
 i
