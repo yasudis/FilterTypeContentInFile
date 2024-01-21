@@ -1,13 +1,9 @@
 package org.yasudis.model.dataType;
 
-import java.util.HashSet;
-
 public abstract class DataType {
-    public static HashSet<DataType> dataTypes = new HashSet<>();
     String outputFileName;
 
     DataType(String fileName) {
-        //dataTypes.add(dataType);
         this.outputFileName = fileName;
     }
 
@@ -15,12 +11,16 @@ public abstract class DataType {
         return false;
     }
 
-  public String getOutputFileName() {
+    public String getOutputFileName() {
         return outputFileName;
     }
 
-    void calculateFullStatistics(String line) {
+    public void calculateStatistics(String line) {
 
+    }
+
+    public String getStatistics(boolean isFullStatics, boolean isShortStatics){
+        return "";
     }
 
 

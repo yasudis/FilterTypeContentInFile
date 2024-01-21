@@ -1,6 +1,5 @@
 package org.yasudis.model.dataType;
 
-import java.io.FileWriter;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
@@ -14,7 +13,6 @@ public class FloatType extends DataType {
 
     public FloatType(String fileName) {
         super(fileName);
-        dataTypes.add(this);
     }
 
     @Override
@@ -34,7 +32,7 @@ public class FloatType extends DataType {
     }
 
     @Override
-    public void calculateFullStatistics(String line) {
+    public void calculateStatistics(String line) {
         BigDecimal number = new BigDecimal(line);
         floatCount = floatCount.add(BigInteger.ONE);
 
@@ -73,13 +71,16 @@ public class FloatType extends DataType {
         floatSum = floatSum.add(number);
     }
 
-    public String getStatics(boolean isFullStatics, boolean isShortStatics) {
-        if (isFullStatics) {
-            return getFullStatics();
-        }
-
+    @Override
+    public String getStatistics(boolean isShortStatics, boolean isFullStatics) {
+        String statistics = "";
         if (isShortStatics) {
             return getShortStatics();
+        }
+
+        if (isFullStatics) {
+            statistics += getShortStatics();
+            return statistics + getFullStatics();
         }
 
         return "Параметры выводы статистики не были заданы.";
@@ -87,8 +88,8 @@ public class FloatType extends DataType {
 
     private String getShortStatics() {
         String shortStats = "";
-        if (floatCount.equals(0)) {
-            shortStats = "Количество типов Integer равно: " + floatCount + ".\n";
+        if (!floatCount.equals(0)) {
+            shortStats = "Количество типов Float равно: " + floatCount + ".\n";
         }
 
         return shortStats;
@@ -97,13 +98,14 @@ public class FloatType extends DataType {
     private String getFullStatics() {
         String fullStatic = "";
 
-        if (floatCount.equals(0)) {
-            fullStatic = "Максимальное число типа Integer равно: " + floatMax + ".\n";
-            fullStatic += ("Минимальное число типа Integer равно: " + floatMin + ".\n");
-            fullStatic += ("Сумма чисел типа Integer равно: " + floatSum + ".\n");
-            fullStatic += ("Среднее Арифметическое значение чисел типа Integer равно: " + floatAverage + ".\n");
+        if (!floatCount.equals(0)) {
+            fullStatic = "Максимальное число типа Float равно: " + floatMax + ".\n";
+            fullStatic += ("Минимальное число типа Float равно: " + floatMin + ".\n");
+            fullStatic += ("Сумма чисел типа Float равно: " + floatSum + ".\n");
+            fullStatic += ("Среднее Арифметическое значение чисел типа Float равно: " + floatAverage + ".\n");
             fullStatic += ("-------------------------\n");
         }
+
         return fullStatic;
     }
 }

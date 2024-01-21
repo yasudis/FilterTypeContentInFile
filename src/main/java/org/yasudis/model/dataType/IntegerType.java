@@ -12,7 +12,6 @@ public class IntegerType extends DataType {
 
     public IntegerType(String fileName) {
         super(fileName);
-        dataTypes.add(this);
     }
 
     @Override
@@ -27,23 +26,23 @@ public class IntegerType extends DataType {
     }
 
     @Override
-  public String getOutputFileName() {
+    public String getOutputFileName() {
         return outputFileName;
     }
 
     @Override
-   public void calculateFullStatistics(String line) {
+    public void calculateStatistics(String line) {
         BigInteger number = new BigInteger(line);
         intCount = intCount.add(BigInteger.ONE);
 
-        getIntMin(number);
-        getIntMax(number);
+        calculateIntMin(number);
+        calculateIntMax(number);
 
         sumInt(number);
         calculateAverageInt();
     }
 
-    private void getIntMin(BigInteger number) {
+    private void calculateIntMin(BigInteger number) {
         if (intMin == null) {
             intMin = number;
         } else {
@@ -53,7 +52,7 @@ public class IntegerType extends DataType {
         }
     }
 
-    private void getIntMax(BigInteger number) {
+    private void calculateIntMax(BigInteger number) {
         if (intMax == null) {
             intMax = number;
         } else {
@@ -71,13 +70,16 @@ public class IntegerType extends DataType {
         intSum = intSum.add(number);
     }
 
-    public String getStatics(boolean isFullStatics, boolean isShortStatics) {
-        if (isFullStatics) {
-            return getFullStatics();
-        }
-
+    @Override
+    public String getStatistics(boolean isShortStatics, boolean isFullStatics) {
+        String statistics = "";
         if (isShortStatics) {
             return getShortStatics();
+        }
+
+        if (isFullStatics) {
+            statistics += getShortStatics();
+            return statistics + getFullStatics();
         }
 
         return "Параметры выводы статистики не были заданы.";

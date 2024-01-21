@@ -1,6 +1,5 @@
 package org.yasudis.model.dataType;
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
 
 public class StringType extends DataType {
@@ -14,26 +13,18 @@ public class StringType extends DataType {
 
     @Override
     public boolean isType(String line) {
-        if (line.isEmpty()) {
-            return false;
-        }
-        return true;
+        return !line.isEmpty();
     }
 
     @Override
-    public String getOutputFileName() {
-        return outputFileName;
-    }
-
-    @Override
-    public void calculateFullStatistics(String line) {
+    public void calculateStatistics(String line) {
         stringCount = stringCount.add(BigInteger.ONE);
 
-        getStringCountMin(line);
-        getIntMax(line);
+        calculateStringCountMin(line);
+        calculateStringCountMax(line);
     }
 
-    private void getStringCountMin(String line) {
+    private void calculateStringCountMin(String line) {
         BigInteger count = new BigInteger(String.valueOf(line.length()));
         stringCount = stringCount.add(BigInteger.ONE);
 
@@ -46,7 +37,7 @@ public class StringType extends DataType {
         }
     }
 
-    private void getIntMax(String line) {
+    private void calculateStringCountMax(String line) {
         BigInteger count = new BigInteger(String.valueOf(line.length()));
         stringCount = stringCount.add(BigInteger.ONE);
 
@@ -59,13 +50,16 @@ public class StringType extends DataType {
         }
     }
 
-    public String getStatics(boolean isFullStatics, boolean isShortStatics) {
-        if (isFullStatics) {
-            return getFullStatics();
-        }
-
+    @Override
+    public String getStatistics(boolean isShortStatics, boolean isFullStatics) {
+        String statistics = "";
         if (isShortStatics) {
             return getShortStatics();
+        }
+
+        if (isFullStatics) {
+            statistics += getShortStatics();
+            return statistics + getFullStatics();
         }
 
         return "Параметры выводы статистики не были заданы.";
@@ -73,7 +67,7 @@ public class StringType extends DataType {
 
     private String getShortStatics() {
         String shortStats = "";
-        if (stringCount.equals(0)) {
+        if (!stringCount.equals(0)) {
             shortStats += "Количество типов String равно: " + stringCount + ".\n";
         }
 
@@ -83,8 +77,7 @@ public class StringType extends DataType {
     private String getFullStatics() {
         String fullStatic = "";
 
-        if (stringCount.equals(0)) {
-            fullStatic += ("Количество типов String равно: " + stringCount + ".\n");
+        if (!stringCount.equals(0)) {
             fullStatic += ("Максимальное количество символов в String равно: " + stringCountMax + ".\n");
             fullStatic += ("Минимальное количество символов в String равно: " + stringCountMin + ".\n");
         }

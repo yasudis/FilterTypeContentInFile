@@ -9,15 +9,38 @@ import org.yasudis.model.sortOption.SorterParameterByDataType;
 import java.io.*;
 import java.util.*;
 
+/**
+ * Сортировка через ловлю исключения преобразования типов BigInteger (для целых чисел) и BigDecimal (для вещественных чисел).
+ * Сначала проверяется по списку BigInteger, затем BigDecimal, остальные не нулевые строки будут являться String.
+ * Для дополнения новыми типами переменных, нужно создать класс с наследованием DataType, а также добавить в список в классе
+ *      DataTypeSorterModel в поле ArrayList<DataType> dataTypes.
+ * При добавлении нового типа нужно учесть, что BigDecimal может преобразовать любое число (вещественное, целое), а String
+ *      любую строку, поэтому эти операции лучше добавлять в список ArrayList<DataType> dataTypes последними.
+ */
+/*
+   Сортировка через регулярные выражения, не видит научные нотации
+        ("-?\\d+([]\\d+)?([Ee]+)?\\d+", line)) - целое
+        ("^-?\\d+(\\.\\d+)?$", line)) - вещественное
+    NumberUtil - не корректно реализует определение типов, не определяет научные нотации и не все дробные числа.
+    Сделал через преобразования BigInteger и BigDecimal - тоже не видит научные нотации как целые числа, но он переводит
+        как понимает стандарт чисел Java. Выбрал этот метод из рассуждения, что эти типы распространенные, а значит и ошибок
+        будет меньше при использовании другими программами.
+ */
+
 public class DataTypeSorterModel extends DataSorter {
     private SorterParameterByDataType sorterParameterByDataType;
     private HashSet<BufferedReader> readers = new HashSet<>();
-    private ArrayList<DataType> dataType = new ArrayList<>();
+    private ArrayList<DataType> dataTypes = new ArrayList<>();
 
-    public DataTypeSorterModel() {
-
+    @Override
+    public void setSorterParameter(String[] args) {
+        sorterParameterByDataType = new SorterParameterByDataType(args);
+        dataTypes.add(new IntegerType(sorterParameterByDataType.getOutputFileInteger()));
+        dataTypes.add(new FloatType(sorterParameterByDataType.getOutputFileFloat()));
+        dataTypes.add(new StringType(sorterParameterByDataType.getOutputFileString()));
     }
 
+    @Override
     public void run() {
         openReaderStreams();
         while (!sortOneLineInFiles()) {
@@ -25,41 +48,17 @@ public class DataTypeSorterModel extends DataSorter {
         }
 
         closeReaderStreams();
-
     }
 
-    public void setSorterParameter(String[] args) {
-        sorterParameterByDataType = new SorterParameterByDataType(args);
-        dataType.add(new IntegerType(sorterParameterByDataType.getOutputFileInteger()));
-        dataType.add(new FloatType(sorterParameterByDataType.getOutputFileFloat()));
-        dataType.add(new StringType(sorterParameterByDataType.getOutputFileString()));
-    }
-
+    @Override
     public String getStatics() {
-        if (sorterParameterByDataType.isFullStatics()) {
-            return getFullStatics();
+        String statistics = "";
+
+        for (DataType dataType : dataTypes) {
+            statistics += dataType.getStatistics(sorterParameterByDataType.isShortStatics(), sorterParameterByDataType.isFullStatics());
         }
 
-        if (sorterParameterByDataType.isShortStatics()) {
-            return getShortStatics();
-        }
-
-        return "Параметры выводы статистики не были заданы.";
-    }
-
-    private String getFullStatics() {
-        String fullStatic = "";
-
-
-        return fullStatic;
-    }
-
-
-    private String getShortStatics() {
-        String shortStats = "";
-
-
-        return shortStats;
+        return statistics;
     }
 
     private boolean sortOneLineInFiles() {
@@ -83,58 +82,12 @@ public class DataTypeSorterModel extends DataSorter {
         return isLine;
     }
 
-    /*
-         // сортировка через регулярные выражения, не видит научные нотации
-           ("-?\\d+([]\\d+)?([Ee]+)?\\d+", line)){
-
-                    } else if (Pattern.matches("^-?\\d+(\\.\\d+)?$", line)) {
-
-                    } else {
-                        stringWriter.write(line + "\n");//строка
-                        calculateFullStatisticsString(line);
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-     */
-    //NumberUtil - не корректно реализует определение типов, не определяет научные нотации и не все дробные числа.
-    // Сделал через преобразования BigInteger и BigDecimal - тоже не видит научные нотации как целые числа, но он переводит как понимает стандарт чисел Java.
-   /*
-    private void sortTypeData(String line) {
-        if (isInteger(line)) {
-            integerWriter = openWriteStreams(sorterParameterByDataType.getOutputFileInteger(), sorterParameterByDataType.isAppend());
-
-            writeInFile(integerWriter, line);
-
-            calculateFullStatisticsInteger(line);
-
-            closeWriterStreams(integerWriter);
-        } else if (isFloat(line)) {
-            floatWriter = openWriteStreams(sorterParameterByDataType.getOutputFileFloat(), sorterParameterByDataType.isAppend());
-
-            writeInFile(floatWriter, line);
-
-            calculateFullStatisticsFloat(line);
-
-            closeWriterStreams(floatWriter);
-        } else {
-            stringWriter = openWriteStreams(sorterParameterByDataType.getOutputFileString(), sorterParameterByDataType.isAppend());
-
-            writeInFile(stringWriter, line);
-
-            calculateFullStatisticsString(line);
-
-            closeWriterStreams(stringWriter);
-        }
-    }
-
-    */
 
     public void sortTypeData(String line) {
-        for (DataType dataType : dataType) {
+        for (DataType dataType : dataTypes) {
             if (dataType.isType(line)) {
                 dataType.getOutputFileName();
+                dataType.calculateStatistics(line);
                 FileWriter fileWriter = openWriteStreams(dataType.getOutputFileName(), sorterParameterByDataType.isAppend());
                 writeInFile(fileWriter, line);
                 closeWriterStreams(fileWriter);
@@ -176,7 +129,7 @@ public class DataTypeSorterModel extends DataSorter {
             return new FileWriter(fileName, append);
 
         } catch (IOException ex) {
-            throw new RuntimeException(ex);
+            throw new RuntimeException( ex);
         }
     }
 
