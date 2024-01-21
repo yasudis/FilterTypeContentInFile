@@ -2,6 +2,7 @@ package org.yasudis.model.sortOption;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class SorterParameterByDataType extends SortParameter {
@@ -16,7 +17,7 @@ public class SorterParameterByDataType extends SortParameter {
     private boolean append;
     private boolean shortStats;
     private boolean fullStats;
-    private List<File> inputFiles = new ArrayList<>();
+    private HashSet<File> inputFiles = new HashSet<>();
 
     public SorterParameterByDataType(String[] args) {
         // Значения по умолчанию
@@ -149,7 +150,7 @@ public class SorterParameterByDataType extends SortParameter {
         return fullStats;
     }
 
-    public List<File> getInputFiles() {
+    public HashSet<File> getInputFiles() {
         return inputFiles;
     }
 }
