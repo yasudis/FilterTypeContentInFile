@@ -1,6 +1,11 @@
-Java : 17.0.0 
-Maven : 4.0.0
- <dependencies>
+Описание программы для ШИФТ ЦФТ.
+
+
+
+Версия Java : 17.0.0 
+Сборка : Maven : 4.0.0
+Использованные библиотеки:
+<dependencies>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
@@ -11,5 +16,11 @@ Maven : 4.0.0
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.12.0</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
