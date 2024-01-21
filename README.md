@@ -1,7 +1,17 @@
-Описание программы для ШИФТ ЦФТ.
+# YasudisCFT
+## Тестовое задание 
+## Курс JAVA.
+Описание задачи по ссылке в гите https://github.com/yasudis/FilterTypeContentInFile/blob/master/Java_TestTask.pdf
 
+## Инструкция по запуску
+В директории с проектом написать в командную строку:
 
+* mvn compile
+* mvn package
+* cd target
+* java -jar FilterTypeContentInFile-1.0-SNAPSHOT.jar -s -a -p sample- in1.txt in2.txt
 
+## Стек технологий
 Версия Java : 17.0.0 
 Сборка : Maven : 4.0.0
 Использованные библиотеки:
