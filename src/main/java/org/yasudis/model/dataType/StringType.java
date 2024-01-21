@@ -17,11 +17,13 @@ public class StringType extends DataType {
     }
 
     @Override
-    public void calculateStatistics(String line) {
+    public void calculateStatistics(String line, boolean isFullStatics) {
         stringCount = stringCount.add(BigInteger.ONE);
 
-        calculateStringCountMin(line);
-        calculateStringCountMax(line);
+        if (isFullStatics) {
+            calculateStringCountMin(line);
+            calculateStringCountMax(line);
+        }
     }
 
     private void calculateStringCountMin(String line) {

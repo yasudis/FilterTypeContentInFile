@@ -13,9 +13,9 @@ import java.util.*;
  * Сортировка через ловлю исключения преобразования типов BigInteger (для целых чисел) и BigDecimal (для вещественных чисел).
  * Сначала проверяется по списку BigInteger, затем BigDecimal, остальные не нулевые строки будут являться String.
  * Для дополнения новыми типами переменных, нужно создать класс с наследованием DataType, а также добавить в список в классе
- *      DataTypeSorterModel в поле ArrayList<DataType> dataTypes.
+ * DataTypeSorterModel в поле LinkedHashMap<DataType> dataTypes.
  * При добавлении нового типа нужно учесть, что BigDecimal может преобразовать любое число (вещественное, целое), а String
- *      любую строку, поэтому эти операции лучше добавлять в список ArrayList<DataType> dataTypes последними.
+ * любую строку, поэтому эти операции лучше добавлять в список LinkedHashMapDataType> dataTypes последними.
  */
 /*
    Сортировка через регулярные выражения, не видит научные нотации
@@ -23,21 +23,21 @@ import java.util.*;
         ("^-?\\d+(\\.\\d+)?$", line)) - вещественное
     NumberUtil - не корректно реализует определение типов, не определяет научные нотации и не все дробные числа.
     Сделал через преобразования BigInteger и BigDecimal - тоже не видит научные нотации как целые числа, но он переводит
-        как понимает стандарт чисел Java. Выбрал этот метод из рассуждения, что эти типы распространенные, а значит и ошибок
+        как понимает стандарт чисел в Java. Выбрал этот метод из рассуждения, что эти типы распространенные, а значит и ошибок
         будет меньше при использовании другими программами.
  */
 
 public class DataTypeSorterModel extends DataSorter {
     private SorterParameterByDataType sorterParameterByDataType;
     private HashSet<BufferedReader> readers = new HashSet<>();
-    private ArrayList<DataType> dataTypes = new ArrayList<>();
+    private LinkedHashMap<DataType, Boolean> dataTypes = new LinkedHashMap<>();
 
     @Override
     public void setSorterParameter(String[] args) {
         sorterParameterByDataType = new SorterParameterByDataType(args);
-        dataTypes.add(new IntegerType(sorterParameterByDataType.getOutputFileInteger()));
-        dataTypes.add(new FloatType(sorterParameterByDataType.getOutputFileFloat()));
-        dataTypes.add(new StringType(sorterParameterByDataType.getOutputFileString()));
+        dataTypes.put(new IntegerType(sorterParameterByDataType.getOutputFileInteger()), sorterParameterByDataType.isAppend());
+        dataTypes.put(new FloatType(sorterParameterByDataType.getOutputFileFloat()), sorterParameterByDataType.isAppend());
+        dataTypes.put(new StringType(sorterParameterByDataType.getOutputFileString()), sorterParameterByDataType.isAppend());
     }
 
     @Override
@@ -54,7 +54,7 @@ public class DataTypeSorterModel extends DataSorter {
     public String getStatics() {
         String statistics = "";
 
-        for (DataType dataType : dataTypes) {
+        for (DataType dataType : dataTypes.keySet()) {
             statistics += dataType.getStatistics(sorterParameterByDataType.isShortStatics(), sorterParameterByDataType.isFullStatics());
         }
 
@@ -84,11 +84,12 @@ public class DataTypeSorterModel extends DataSorter {
 
 
     public void sortTypeData(String line) {
-        for (DataType dataType : dataTypes) {
+        for (DataType dataType : dataTypes.keySet()) {
             if (dataType.isType(line)) {
                 dataType.getOutputFileName();
-                dataType.calculateStatistics(line);
-                FileWriter fileWriter = openWriteStreams(dataType.getOutputFileName(), sorterParameterByDataType.isAppend());
+                dataType.calculateStatistics(line, sorterParameterByDataType.isFullStatics());
+                FileWriter fileWriter = openWriteStreams(dataType.getOutputFileName(), dataTypes.get(dataType));
+                dataTypes.replace(dataType, true);
                 writeInFile(fileWriter, line);
                 closeWriterStreams(fileWriter);
                 break;
@@ -129,7 +130,7 @@ public class DataTypeSorterModel extends DataSorter {
             return new FileWriter(fileName, append);
 
         } catch (IOException ex) {
-            throw new RuntimeException( ex);
+            throw new RuntimeException(ex);
         }
     }
 

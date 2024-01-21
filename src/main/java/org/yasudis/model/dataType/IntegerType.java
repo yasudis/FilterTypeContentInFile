@@ -31,15 +31,17 @@ public class IntegerType extends DataType {
     }
 
     @Override
-    public void calculateStatistics(String line) {
+    public void calculateStatistics(String line, boolean isFullStatics) {
         BigInteger number = new BigInteger(line);
         intCount = intCount.add(BigInteger.ONE);
 
-        calculateIntMin(number);
-        calculateIntMax(number);
+        if (isFullStatics) {
+            calculateIntMin(number);
+            calculateIntMax(number);
 
-        sumInt(number);
-        calculateAverageInt();
+            sumInt(number);
+            calculateAverageInt();
+        }
     }
 
     private void calculateIntMin(BigInteger number) {
@@ -87,7 +89,8 @@ public class IntegerType extends DataType {
 
     private String getShortStatics() {
         String shortStats = "";
-        if (intMax != null) {
+
+        if (!intCount.equals(0)) {
             shortStats = "Количество типов Integer равно: " + intCount + ".\n";
         }
 
@@ -97,7 +100,7 @@ public class IntegerType extends DataType {
     private String getFullStatics() {
         String fullStatic = "";
 
-        if (intMax != null) {
+        if (!intCount.equals(0)) {
             fullStatic = "Максимальное число типа Integer равно: " + intMax + ".\n";
             fullStatic += ("Минимальное число типа Integer равно: " + intMin + ".\n");
             fullStatic += ("Сумма чисел типа Integer равно: " + intSum + ".\n");

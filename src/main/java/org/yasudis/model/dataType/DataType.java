@@ -15,13 +15,11 @@ public abstract class DataType {
         return outputFileName;
     }
 
-    public void calculateStatistics(String line) {
+    public void calculateStatistics(String line, boolean isFullStatics) {
 
     }
 
     public String getStatistics(boolean isFullStatics, boolean isShortStatics){
         return "";
     }
-
-
 }

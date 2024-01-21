@@ -32,15 +32,17 @@ public class FloatType extends DataType {
     }
 
     @Override
-    public void calculateStatistics(String line) {
+    public void calculateStatistics(String line, boolean isFullStatics) {
         BigDecimal number = new BigDecimal(line);
         floatCount = floatCount.add(BigInteger.ONE);
 
-        getFloatMin(number);
-        getFloatMax(number);
+        if (isFullStatics) {
+            getFloatMin(number);
+            getFloatMax(number);
 
-        sumFloat(number);
-        calculateAverageFloat();
+            sumFloat(number);
+            calculateAverageFloat();
+        }
     }
 
     private void getFloatMin(BigDecimal number) {
